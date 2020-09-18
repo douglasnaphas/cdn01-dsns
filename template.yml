@@ -53,7 +53,7 @@ Resources:
     Timeout: 10
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "awscodestar-${ProjectId}-lambda-HelloWorld"
+      FunctionName: !Sub "awscodestar-${ProjectId}-lambda-ScriptOne"
       Handler: index.handler
       Runtime: nodejs12.x
       Environment:
@@ -73,7 +73,7 @@ Resources:
     Timeout: 10
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "awscodestar-${ProjectId}-lambda-HelloWorld"
+      FunctionName: !Sub "awscodestar-${ProjectId}-lambda-ScriptTwo"
       Handler: index.handler
       Runtime: nodejs12.x
       Environment:
@@ -93,7 +93,7 @@ Resources:
     Timeout: 10
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "awscodestar-${ProjectId}-lambda-HelloWorld"
+      FunctionName: !Sub "awscodestar-${ProjectId}-lambda-ScriptThree"
       Handler: index.handler
       Runtime: nodejs12.x
       Environment:
