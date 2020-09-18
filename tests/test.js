@@ -32,3 +32,24 @@ describe("Tests app", function () {
       });
   });
 });
+
+describe("Tests scripts 1, 2, and 3", function () {
+  const tests = [{ path: "1" }, { path: "2" }, { path: "3" }];
+  tests.forEach(function (t) {
+    it("verifies get on script number " + t.path, function (done) {
+      console.log(t.path + " running...");
+      request
+        .get("/" + t.path)
+        .expect(200)
+        .end(function (err, result) {
+          test
+            .string(result.text)
+            .contains("console.log('hi, from script " + t.path + "');");
+          test
+            .value(result)
+            .hasHeader("content-type", "text/plain; charset=utf-8");
+          done(err);
+        });
+    });
+  });
+});

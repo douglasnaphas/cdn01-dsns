@@ -12,5 +12,10 @@ app.post("/", function (req, res) {
   });
 });
 
+app.get("/:scriptNumber", function (req, res) {
+  res.set({ "Content-Type": "text/plain" });
+  res.send(`console.log('hi, from script ${req.params.scriptNumber}');`);
+});
+
 // Export your Express configuration so that it can be consumed by the Lambda handler
 module.exports = app;
