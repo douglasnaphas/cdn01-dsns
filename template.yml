@@ -169,6 +169,46 @@ Resources:
           Properties:
             Path: /json-3
             Method: get
+  JSONJS:
+    Timeout: 10
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "awscodestar-${ProjectId}-lambda-JSONJS"
+      Handler: index.handler
+      Runtime: nodejs12.x
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::GetAtt:
+          - LambdaExecutionRole
+          - Arn
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /json-js
+            Method: get
+  JSONTxt:
+    Timeout: 10
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "awscodestar-${ProjectId}-lambda-JSONTxt"
+      Handler: index.handler
+      Runtime: nodejs12.x
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::GetAtt:
+          - LambdaExecutionRole
+          - Arn
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /json-txt
+            Method: get
   LambdaExecutionRole:
     Description: Creating service role in IAM for AWS Lambda
     Type: AWS::IAM::Role
