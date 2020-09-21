@@ -70,3 +70,36 @@ describe("Tests JSON 1, 2, and 3", function () {
     });
   });
 });
+
+describe("Test JSON with non-JSON content types", () => {
+  it("verifies get json-js, JSON with content-type: application/javascript", (done) => {
+    request
+      .get("/json-js")
+      .expect(200)
+      .end(function (err, result) {
+        const parsed = JSON.parse(result.text);
+        const { message, number } = parsed;
+        test.string(message).contains("content type application/javascript");
+        test.number(number).is(42); // meaningless arbitrary number
+        test
+          .value(result)
+          .hasHeader("content-type", "application/javascript; charset=utf-8");
+        done(err);
+      });
+  });
+  it("verifies get json-txt, JSON with content-type: text/plain", (done) => {
+    request
+      .get("/json-txt")
+      .expect(200)
+      .end(function (err, result) {
+        const parsed = JSON.parse(result.text);
+        const { message, number } = parsed;
+        test.string(message).contains("content type text/plain");
+        test.number(number).is(43); // meaningless arbitrary number
+        test
+          .value(result)
+          .hasHeader("content-type", "text/plain; charset=utf-8");
+        done(err);
+      });
+  });
+});
