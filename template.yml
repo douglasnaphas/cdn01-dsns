@@ -109,6 +109,66 @@ Resources:
           Properties:
             Path: /3
             Method: get
+  JSONOne:
+    Timeout: 10
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "awscodestar-${ProjectId}-lambda-JSONOne"
+      Handler: index.handler
+      Runtime: nodejs12.x
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::GetAtt:
+          - LambdaExecutionRole
+          - Arn
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /json-1
+            Method: get
+  JSONTwo:
+    Timeout: 10
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "awscodestar-${ProjectId}-lambda-JSONTwo"
+      Handler: index.handler
+      Runtime: nodejs12.x
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::GetAtt:
+          - LambdaExecutionRole
+          - Arn
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /json-2
+            Method: get
+  JSONThree:
+    Timeout: 10
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "awscodestar-${ProjectId}-lambda-JSONThree"
+      Handler: index.handler
+      Runtime: nodejs12.x
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::GetAtt:
+          - LambdaExecutionRole
+          - Arn
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /json-3
+            Method: get
   LambdaExecutionRole:
     Description: Creating service role in IAM for AWS Lambda
     Type: AWS::IAM::Role

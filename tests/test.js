@@ -37,7 +37,6 @@ describe("Tests scripts 1, 2, and 3", function () {
   const tests = [{ path: "1" }, { path: "2" }, { path: "3" }];
   tests.forEach(function (t) {
     it("verifies get on script number " + t.path, function (done) {
-      console.log(t.path + " running...");
       request
         .get("/" + t.path)
         .expect(200)
@@ -48,6 +47,24 @@ describe("Tests scripts 1, 2, and 3", function () {
           test
             .value(result)
             .hasHeader("content-type", "text/plain; charset=utf-8");
+          done(err);
+        });
+    });
+  });
+});
+
+describe("Tests JSON 1, 2, and 3", function () {
+  const tests = [{ number: "1" }, { number: "2" }, { number: "3" }];
+  tests.forEach(function (t) {
+    it("verifies get on JSON source number " + t.number, function (done) {
+      request
+        .get(`/json-${t.number}`)
+        .expect(200)
+        .end(function (err, result) {
+          test.number(result.body.number).is(parseInt(t.number));
+          test
+            .value(result)
+            .hasHeader("content-type", "application/json; charset=utf-8");
           done(err);
         });
     });
