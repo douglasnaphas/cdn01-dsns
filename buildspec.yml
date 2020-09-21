@@ -16,6 +16,10 @@ phases:
       - npm test
   build:
     commands:
+      # Update the age of old files
+      # Some packages can bring in old files, causing the error:
+      # ZIP does not support timestamps before 1980
+      - find node_modules/ -mtime +14600 -exec touch {} +
       # Use AWS SAM to package the application using AWS CloudFormation
       - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template template-export.yml
 
