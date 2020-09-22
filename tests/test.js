@@ -3,6 +3,7 @@
 const supertest = require("supertest");
 const test = require("unit.js");
 const app = require("../app.js");
+const { text } = require("express");
 
 const request = supertest(app);
 
@@ -68,6 +69,18 @@ describe("Tests JSON 1, 2, and 3", function () {
           done(err);
         });
     });
+  });
+});
+
+describe("Tests JSONP", function () {
+  it("verifies JSONP at /json-3", (done) => {
+    request
+      .get("/json-3?jsonp=parseResponse")
+      .expect(200)
+      .end((err, result) => {
+        test.string(result.text).contains('parseResponse({"number":3})');
+        done(err);
+      });
   });
 });
 

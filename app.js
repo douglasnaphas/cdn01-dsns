@@ -23,6 +23,10 @@ app.get("/json-2", (req, res) => {
 });
 
 app.get("/json-3", (req, res) => {
+  if (req.query && req.query.jsonp == "parseResponse") {
+    res.set({ "Content-Type": "application/javascript" });
+    return res.send('parseResponse({"number":3})');
+  }
   res.set({ "Content-Type": "application/json" });
   res.send({ number: 3 });
 });
