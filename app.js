@@ -48,6 +48,32 @@ app.get("/json-txt", (req, res) => {
   res.send({ message: "content type text/plain", number: 43 });
 });
 
+app.get("/defvar-ok-1", (req, res) => {
+  const varName = (req.query && req.query.var) || "var1";
+  const varVal = (req.query && req.query.val) || "val1";
+  res.set({ "Content-Type": "application/javascript" });
+  return res.send(
+    `${varName} = "${varVal}"; console.log("${varName} set to ${varVal}");`
+  );
+});
+
+app.get("/defvar-ok-2", (req, res) => {
+  const varName = (req.query && req.query.var) || "var2";
+  const varVal = (req.query && req.query.val) || "val2";
+  res.set({ "Content-Type": "application/javascript" });
+  return res.send(
+    `${varName} = "${varVal}"; console.log("${varName} set to ${varVal}");`
+  );
+});
+
+app.get("/defvar-bad-1", (req, res) => {
+  return res.status(400).send("client error for /defvar-bad-1");
+});
+
+app.get("/defvar-bad-2", (req, res) => {
+  return res.status(500).send("client error for /defvar-bad-2");
+});
+
 app.get("/html-1", (req, res) => {
   const contents = fs.readFileSync(`public${path.sep}page-01.html`);
   res.set({ "Content-Type": "text/html" });

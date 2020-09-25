@@ -34,6 +34,95 @@ describe("Tests app", function () {
   });
 });
 
+describe("Tests defvars paths", () => {
+  describe("ok paths", () => {
+    it("verifies /defvar-ok-1", (done) => {
+      request
+        .get("/defvar-ok-1")
+        .expect(200)
+        .end((err, result) => {
+          test
+            .string(result.text)
+            .contains(`var1 = "val1"; console.log("var1 set to val1");`);
+          done(err);
+        });
+    });
+    it("verifies /defvar-ok-1?var=abc", (done) => {
+      request
+        .get("/defvar-ok-1?var=abc")
+        .expect(200)
+        .end((err, result) => {
+          test
+            .string(result.text)
+            .contains(`abc = "val1"; console.log("abc set to val1");`);
+          done(err);
+        });
+    });
+    it("verifies /defvar-ok-1?var=abc&val=xyz", (done) => {
+      request
+        .get("/defvar-ok-1?var=abc&val=xyz")
+        .expect(200)
+        .end((err, result) => {
+          test
+            .string(result.text)
+            .contains(`abc = "xyz"; console.log("abc set to xyz");`);
+          done(err);
+        });
+    });
+    it("verifies /defvar-ok-2", (done) => {
+      request
+        .get("/defvar-ok-2")
+        .expect(200)
+        .end((err, result) => {
+          test
+            .string(result.text)
+            .contains(`var2 = "val2"; console.log("var2 set to val2");`);
+          done(err);
+        });
+    });
+    it("verifies /defvar-ok-2?val=twoval", (done) => {
+      request
+        .get("/defvar-ok-2?val=twoval")
+        .expect(200)
+        .end((err, result) => {
+          test
+            .string(result.text)
+            .contains(`var2 = "twoval"; console.log("var2 set to twoval");`);
+          done(err);
+        });
+    });
+    it("verifies /defvar-ok-2?val=twotwo&var=too", (done) => {
+      request
+        .get("/defvar-ok-1?val=twotwo&var=too")
+        .expect(200)
+        .end((err, result) => {
+          test
+            .string(result.text)
+            .contains(`too = "twotwo"; console.log("too set to twotwo");`);
+          done(err);
+        });
+    });
+  });
+  describe("bad paths", () => {
+    it("verifies /defvar-bad-1 gives 400", (done) => {
+      request
+        .get("/defvar-bad-1")
+        .expect(400)
+        .end((err, result) => {
+          done(err);
+        });
+    });
+    it("verifies /defvar-bad-2 gives 500", (done) => {
+      request
+        .get("/defvar-bad-2")
+        .expect(500)
+        .end((err, result) => {
+          done(err);
+        });
+    });
+  });
+});
+
 describe("Tests scripts 1, 2, and 3", function () {
   const tests = [{ path: "1" }, { path: "2" }, { path: "3" }];
   tests.forEach(function (t) {
