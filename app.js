@@ -1,5 +1,7 @@
 var express = require("express");
 var app = express();
+var fs = require("fs");
+var path = require("path");
 
 app.get("/", function (req, res) {
   res.set({ "Content-Type": "text/plain" });
@@ -44,6 +46,12 @@ app.get("/json-js", (req, res) => {
 app.get("/json-txt", (req, res) => {
   res.set({ "Content-Type": "text/plain" });
   res.send({ message: "content type text/plain", number: 43 });
+});
+
+app.get("/html-1", (req, res) => {
+  const contents = fs.readFileSync(`public${path.sep}page-01.html`);
+  res.set({ "Content-Type": "text/html" });
+  return res.send(contents.toString());
 });
 
 // Export your Express configuration so that it can be consumed by the Lambda handler

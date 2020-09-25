@@ -209,6 +209,26 @@ Resources:
           Properties:
             Path: /json-txt
             Method: get
+  HTMLOne:
+    Timeout: 10
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "awscodestar-${ProjectId}-lambda-HTMLOne"
+      Handler: index.handler
+      Runtime: nodejs12.x
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::GetAtt:
+          - LambdaExecutionRole
+          - Arn
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /html-1
+            Method: get
   LambdaExecutionRole:
     Description: Creating service role in IAM for AWS Lambda
     Type: AWS::IAM::Role
